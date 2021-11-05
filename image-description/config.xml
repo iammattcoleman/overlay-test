@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<image schemaversion="6.8" name="overlay-test" displayname="Overlay Test">
+    <description type="system">
+        <author>Matt Coleman</author>
+        <contact>matt@datto.com</contact>
+        <specification>Image description for Ubuntu 20.04</specification>
+    </description>
+    <preferences>
+        <version>0.0.1</version>
+        <packagemanager>apt-get</packagemanager>
+        <locale>en_US</locale>
+        <keytable>us</keytable>
+        <timezone>UTC</timezone>
+        <rpm-check-signatures>false</rpm-check-signatures>
+        <type image="iso"
+              publisher="Datto, Inc." volid="OVERLAY_TEST"
+              flags="dmsquash" hybridpersistent_filesystem="ext4" hybridpersistent="true"
+              firmware="efi" kernelcmdline="rd.live.overlay.overlayfs">
+            <bootloader name="grub2" grub_template="grub.cfg.template" console="console" timeout="10"/>
+        </type>
+    </preferences>
+    <users>
+        <user name="root" password="example" pwdformat="plain" groups="root" home="/root"/>
+    </users>
+
+    <repository type="apt-deb" repository_gpgcheck="false">
+        <source path="obs://Virtualization:Appliances:Builder/xUbuntu_20.04"/>
+    </repository>
+    <repository type="apt-deb" alias="ubuntu" distribution="focal" components="main restricted universe" repository_gpgcheck="false">
+        <source path="http://us.archive.ubuntu.com/ubuntu/"/>
+    </repository>
+
+    <packages type="image">
+        <package name="linux-generic"/>
+        <package name="locales"/>
+
+        <!-- dracut create-overlay module dependencies -->
+        <package name="parted"/>
+        <package name="xfsprogs"/>
+    </packages>
+    <packages type="iso">
+        <!-- These packages are required by the Kiwi NG live environment. -->
+        <package name="dracut-config-generic"/>
+        <package name="grub-common"/>
+        <package name="grub-efi-amd64"/>
+        <package name="grub-pc-bin"/>
+        <package name="systemd"/>
+        <package name="systemd-sysv"/>
+        <package name="shim"/>
+        <package name="shim-signed"/>
+        <package name="xz-utils"/>
+    </packages>
+    <packages type="bootstrap">
+        <package name="usrmerge"/>      <!-- ensure correct FHS paths -->
+    </packages>
+</image>

@@ -1,0 +1,34 @@
+# overlay-test grub.cfg
+
+search ${search_params}
+
+set linux=${kernel_file}
+set initrd=${initrd_file}
+if [ "$$grub_platform" == "efi" ]; then
+    set linux=linuxefi
+    set initrd=initrdefi
+fi
+export linux
+export initrd
+
+terminal_input console
+terminal_output ${terminal_setup}
+
+set default=${default_boot}
+set timeout=${boot_timeout}
+set timeout_style=${boot_timeout_style}
+
+menuentry "Boot ${title} and persist changes" --class os --unrestricted {
+    $$linux ($$root)${bootpath}/linux ${boot_options} rd.live.overlay=LABEL=persist
+    $$initrd ($$root)${bootpath}/initrd
+}
+
+menuentry "Boot ${title} and persist changes, but DELETE existing persistence" --class os --unrestricted {
+    $$linux ($$root)${bootpath}/linux ${boot_options} rd.live.overlay=LABEL=persist rd.live.overlay.reset=1
+    $$initrd ($$root)${bootpath}/initrd
+}
+
+menuentry "Boot ${title} and do not persist changes" --class os --unrestricted {
+    $$linux ($$root)${bootpath}/linux ${boot_options}
+    $$initrd ($$root)${bootpath}/initrd
+}
