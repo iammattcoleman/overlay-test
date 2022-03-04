@@ -28,9 +28,8 @@ gatherData() {
 
     filesystem=$(getarg rd.live.overlay.cowfs)
     [ -z "$filesystem" ] && filesystem="ext4"
-    if [ "$filesystem" != "ext4" ] && [ "$filesystem" != "xfs" ]; then
-        # Only ext4 and xfs are supported, matching Kiwi's 'hybridpersistent_filesystem' setting.
-        die "Overlay creation failed: only ext4 and xfs are supported in the 'rd.live.overlay.cowfs' kernel parameter"
+    if [ "$filesystem" != "ext4" ] && [ "$filesystem" != "xfs" ] && [ "$filesystem" != "btrfs" ]; then
+        die "Overlay creation failed: only ext4, xfs, and btrfs are supported in the 'rd.live.overlay.cowfs' kernel parameter"
     fi
 
     live_dir=$(getarg rd.live.dir)

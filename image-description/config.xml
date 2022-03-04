@@ -36,6 +36,7 @@
         <package name="locales"/>
 
         <!-- dracut create-overlay module dependencies -->
+        <package name="btrfs-progs"/>
         <package name="parted"/>
         <package name="xfsprogs"/>
     </packages>

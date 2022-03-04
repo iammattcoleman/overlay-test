@@ -12,7 +12,7 @@ depends() {
 }
 
 install() {
-    inst_multiple awk basename blkid cat grep mkdir mkfs.ext4 mkfs.xfs mount parted readlink rmdir tr umount
+    inst_multiple awk basename blkid cat grep mkdir mkfs.btrfs mkfs.ext4 mkfs.xfs mount parted readlink rmdir tr umount
     # shellcheck disable=SC2154
     inst_hook pre-udev 25 "$moddir/create-overlay-genrules.sh"
     inst_script "$moddir/create-overlay.sh" "/sbin/create-overlay"
