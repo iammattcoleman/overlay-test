@@ -69,7 +69,11 @@ gatherData() {
         info "Skipping overlay creation: there is no free space after the last partition"
         exit 0
     fi
-    partitionStart=$((${freeSpaceStart%.*} + 1))%
+    partitionStart=$((${freeSpaceStart%.*} + 1))
+    if [ $partitionStart -eq 100 ]; then
+        info "Skipping overlay creation: there is not enough free space after the last partition"
+        exit 0
+    fi
 
     overlayPartition=${blockDevice}$((currentPartitionCount + 1))
 
@@ -82,7 +86,7 @@ gatherData() {
 
 createPartition() {
     # shellcheck disable=SC2086
-    parted --script --align optimal ${blockDevice} mkpart primary ${partitionStart} 100%
+    parted --script --align optimal ${blockDevice} mkpart primary ${partitionStart}% 100%
 }
 
 createFilesystem() {
