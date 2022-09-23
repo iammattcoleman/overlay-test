@@ -21,5 +21,5 @@ install() {
     # shellcheck disable=SC2154
     inst_hook pre-udev 25 "$moddir/create-overlay-genrules.sh"
     inst_script "$moddir/create-overlay.sh" "/sbin/create-overlay"
-    dracut_need_initqueue # Do I need this? I think I do...
+    dracut_need_initqueue
 }
