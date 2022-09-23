@@ -5,5 +5,5 @@ set -euf -o pipefail
 rm -rf output
 
 # build
-time kiwi-ng --type iso --debug --temp-dir=${KIWI_TEMP_DIR:-/var/tmp} \
+time kiwi-ng-3 --type iso --debug --temp-dir=${KIWI_TEMP_DIR:-/var/tmp} \
     system build --description=image-description --target-dir=output 2>&1

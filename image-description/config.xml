@@ -4,11 +4,11 @@
     <description type="system">
         <author>Matt Coleman</author>
         <contact>matt@datto.com</contact>
-        <specification>Image description for Ubuntu 20.04</specification>
+        <specification>Image description for Fedora 36</specification>
     </description>
     <preferences>
         <version>0.0.1</version>
-        <packagemanager>apt-get</packagemanager>
+        <packagemanager>dnf</packagemanager>
         <locale>en_US</locale>
         <keytable>us</keytable>
         <timezone>UTC</timezone>
@@ -24,35 +24,37 @@
         <user name="root" password="example" pwdformat="plain" groups="root" home="/root"/>
     </users>
 
-    <repository type="apt-deb" repository_gpgcheck="false">
-        <source path="obs://Virtualization:Appliances:Builder/xUbuntu_20.04"/>
+    <repository type="rpm-md" priority="1" alias="kiwi-common-boot">
+        <source path="obs://Virtualization:Appliances:Builder/Fedora_36"/>
     </repository>
-    <repository type="apt-deb" alias="ubuntu" distribution="focal" components="main restricted universe" repository_gpgcheck="false">
-        <source path="http://us.archive.ubuntu.com/ubuntu/"/>
+    <repository type="rpm-md" alias="Fedora36" sourcetype="metalink">
+        <source path="https://mirrors.fedoraproject.org/metalink?repo=fedora-36&amp;arch=x86_64"/>
+    </repository>
+    <repository type="rpm-md" alias="Fedora36-updates" sourcetype="metalink">
+        <source path="https://mirrors.fedoraproject.org/metalink?repo=updates-released-f36&amp;arch=x86_64"/>
     </repository>
 
     <packages type="image">
-        <package name="linux-generic"/>
-        <package name="locales"/>
+        <package name="kernel"/>
 
         <!-- dracut create-overlay module dependencies -->
         <package name="btrfs-progs"/>
+        <package name="e2fsprogs"/>
         <package name="parted"/>
         <package name="xfsprogs"/>
     </packages>
     <packages type="iso">
         <!-- These packages are required by the Kiwi NG live environment. -->
         <package name="dracut-config-generic"/>
-        <package name="grub-common"/>
-        <package name="grub-efi-amd64"/>
-        <package name="grub-pc-bin"/>
-        <package name="systemd"/>
-        <package name="systemd-sysv"/>
-        <package name="shim"/>
-        <package name="shim-signed"/>
-        <package name="xz-utils"/>
+        <package name="dracut-live"/>
+        <package name="grub2"/>
+        <package name="grub2-efi-x64"/>
+        <package name="grub2-efi-x64-modules"/>
+        <package name="shim-x64"/>
     </packages>
     <packages type="bootstrap">
-        <package name="usrmerge"/>      <!-- ensure correct FHS paths -->
+        <package name="glibc-all-langpacks"/>
+        <package name="filesystem"/>
+        <package name="basesystem"/>
     </packages>
 </image>
