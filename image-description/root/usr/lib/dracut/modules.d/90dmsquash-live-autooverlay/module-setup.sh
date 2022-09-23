@@ -11,6 +11,10 @@ depends() {
     return 0
 }
 
+installkernel() {
+    instmods btrfs ext4 xfs
+}
+
 install() {
     inst_multiple awk basename blkid cat grep mkdir mount parted readlink rmdir tr umount
     inst_multiple -o mkfs.btrfs mkfs.ext4 mkfs.xfs
